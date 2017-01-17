@@ -427,6 +427,7 @@ C   INEXACT LINESEARCH
           CALL dscal_sl(n, alpha, s, 1)
           CALL dcopy_(n, x0, 1, x, 1)
           CALL daxpy_sl(n, one, s, 1, x, 1)
+          CALL bound(n, x, xl, xu)
           mode = 1
           GO TO 330
   200         IF (h1.LE.h3/ten .OR. line.GT.10) GO TO 240
