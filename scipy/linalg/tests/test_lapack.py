@@ -17,6 +17,7 @@ import numpy as np
 from scipy.linalg import _flapack as flapack
 from scipy.linalg import inv
 from scipy.linalg import svd
+from scipy.linalg.lapack import _compute_lwork
 from scipy._lib._testutils import xslow
 
 try:
@@ -154,8 +155,7 @@ class TestLeastSquaresSolvers(TestCase):
                 nrhs = 1
 
             # Request of sizes
-            work, info = gels_lwork(m,n,nrhs)
-            lwork = int(np.real(work))
+            lwork = _compute_lwork(gels_lwork, m, n, nrhs)
 
             lqr, x, info = gels(a1, b1, lwork)
             assert_allclose(x[:-1], np.array([-14.333333333333323,
@@ -179,8 +179,7 @@ class TestLeastSquaresSolvers(TestCase):
                 nrhs = 1
 
             # Request of sizes
-            work, info = gels_lwork(m,n,nrhs)
-            lwork = int(np.real(work))
+            lwork = _compute_lwork(gels_lwork, m, n, nrhs)
 
             lqr, x, info = gels(a1, b1, lwork)
             assert_allclose(x[:-1],
